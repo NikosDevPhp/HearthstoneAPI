@@ -12,5 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('cards.index', [
+        'cards' => App\Card::all()
+    ]);
+});
+
+Route::get('/search', function (\App\Repositories\CardsRepository $repository) {
+    $cards = $repository->search((string) request('q'));
+
+    return view('cards.index', [
+        'cards' => $cards
+    ]);
 });
